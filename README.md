@@ -1,5 +1,5 @@
 # snabbkaffe
-An easy to use [Hugo](https://gohugo.io/) theme for a café or coffee shop.
+An easy to use [Hugo](https://gohugo.io/) theme for a café or coffee shop. It has a score of 100 on every category audited in Lighthouse.
 
 ## Important
 You need to have a `content/_index.md` file.
