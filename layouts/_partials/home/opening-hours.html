@@ -1,0 +1,25 @@
+<section id="opening-hours" class="center">
+  <picture>
+    {{ with resources.Get hugo.Data.openingHours.image.url }}
+      {{ with .Fill "smart 480x400 webp q50" }}
+        <source media="(width <= 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x400 webp q50" }}
+        <source media="(width > 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x400 webp q50" }}
+        <img src="{{ .RelPermalink }}" alt="{{ hugo.Data.openingHours.image.alt }}" width="{{ .Width}}" height="{{ .Height }}" fetchpriority="high">
+      {{ end }}
+    {{ end }}
+  </picture>
+  <h2>{{ hugo.Data.openingHours.title }}</h2>
+  <ul>
+    {{ range hugo.Data.openingHours.schedule }}
+      <li>
+        {{ .days }}:
+        <time datetime="{{ .from }}">{{ .from }}</time> - 
+        <time datetime="{{ .to }}">{{ .to }}</time>
+      </li>
+    {{ end }}
+  </ul>
+</section>

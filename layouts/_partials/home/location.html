@@ -1,0 +1,10 @@
+<section id="location" class="center">
+  <h2>{{ hugo.Data.location.title }}</h2>
+  <address>
+    {{ with hugo.Data.location.address }}
+      {{ .street }},<br />
+      {{ .postalCode }} {{ .city }},<br />
+      {{ .country }}
+    {{ end }}
+  </address>
+</section>

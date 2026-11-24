@@ -1,0 +1,262 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ printf "%s | %s" .Title site.Title }}{{ end }}</title>
+<meta name="description" content="{{ site.Params.Description }}">
+<link rel="canonical" href="{{ .Permalink }}">
+<meta property="og:title" content="{{ site.Title }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with resources.Get site.Params.openGraph.image.url -}}
+  {{- with .Fill "smart 1200x630 webp q50" -}}
+    <meta property="og:image" content="{{ .Permalink }}">
+  {{- end -}}
+{{- end -}}
+<meta property="og:image:alt" content="site.Params.openGraph.image.alt">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style type="text/css">
+  @layer reset, theme, global, layout, modules, utils;
+  
+  @layer reset {
+    *,
+    ::before,
+    ::after {
+      box-sizing: border-box;
+    }
+  
+    body {
+      margin: unset;
+      text-box: trim-both cap alphabetic;
+    }
+  
+    h1, h2, h3, h4, h5, h6,
+    ul, ol,
+    blockquote,
+    p {
+      margin: unset;
+    }
+  
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+  
+    img,
+    picture,
+    svg,
+    canvas {
+      display: block;
+      max-inline-size: 100%;
+      height: auto;
+    }
+  
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      ::before,
+      ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  }
+  
+  @layer theme {
+    :root {
+      color-scheme: light dark;
+    
+      --black: oklch(16.2% 0 0);
+      --white: oklch(94% 0.0301 25.28deg);
+    
+      --background: light-dark(
+        var(--white),
+        var(--black)
+      );
+    
+      --foreground-primary: light-dark(
+        var(--black),
+        oklch(93.3% 0 0)
+      );
+    
+      --foreground-secondary: light-dark(
+        oklch(45.9% 0 0),
+        oklch(72% 0 0)
+      );
+    
+      --font-main: serif;
+    
+      --transition-duration-lower: 300ms;
+      --transition-duration-upper: 500ms;
+    
+      --max-width: 800px;
+    }
+  }
+  
+  @layer global {
+    :root {
+      block-size: 100%;
+      background-color: var(--background);
+      font-family: var(--font-main);
+      font-size: 100%;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
+      color: var(--foreground-primary);
+    }
+  
+    body {
+      container: body / inline-size;
+      max-inline-size: var(--max-width);
+      min-block-size: 100%;
+      margin-inline: auto;
+    }
+  
+    h1, h2, h3, h4, h5, h6 {
+      font-weight: 400;
+      letter-spacing: 0.02em;
+      text-wrap: balance;
+    }
+  
+    h1 {
+      font-size: calc(1rem * 1.25 * 1.25 * 1.25 * 1.25);
+      text-decoration: underline 2px;
+    }
+  
+    h2 {
+      font-size: calc(1rem * 1.25 * 1.25 * 1.25);
+      margin-block: 2rem 1rem;
+    }
+  
+    h3 {
+      font-size: calc(1rem * 1.25 * 1.25);
+    }
+  
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+  
+    hr {
+      border: none;
+      height: 1px;
+      background-color: var(--foreground-secondary);
+    }
+  
+    a {
+      color: var(--foreground-primary);
+    }
+    
+    footer {
+      color: var(--foreground-secondary);
+      font-size: 1rem;
+    }
+  }
+  
+  @layer layout {
+    body {
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+  
+    header {
+      margin-block: 2rem 1rem;
+    }
+  
+    footer {
+      margin-block: 4rem 2rem;
+      margin-inline: auto;
+    }
+  
+    hr {
+      margin-inline: auto;
+      margin-block: 2rem;
+      max-inline-size: 70%;
+    }
+  
+    section + section {
+      margin-block-start: 2rem;
+    }
+  }
+  
+  @layer modules {
+    @scope (.menu-item) {
+      :scope {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-auto-rows: auto;
+        margin-block: 1rem;
+      }
+    
+      .name {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        font-weight: normal;
+      }
+    
+      .description {
+        grid-column: 1 / 3;
+        grid-row: 2 / 3;
+        color: var(--foreground-secondary);
+      }
+    
+      .price {
+        grid-column: 2 / 3;
+        grid-row: 1 / 2;
+      }
+    
+      .menu-options {
+        grid-column: 1 / 3;
+        grid-row: 5 / 6;
+      }
+    }
+  
+    @scope (.menu-options) {
+      :scope {
+        margin-inline-start: 1rem;
+        margin-block-start: 0.5rem;
+      }
+    
+      li {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-auto-rows: auto;
+      }
+    
+      span {
+        grid-row: span 1;
+        grid-column: span 1;
+      }
+    
+      data {
+        grid-row: span 1;
+        grid-column: span 1;
+      }
+    
+      p {
+        grid-row: span 1;
+        grid-column: span 2;
+        font-size: 0.875em;
+        color: var(--foreground-secondary);
+      }
+    }
+  }
+  
+  @layer utils {
+    .center {
+      text-align: center;
+    }
+  
+    .pretty-paragraph {
+      overflow-wrap: break-word;
+      text-align: justify;
+    }
+  
+    .content {
+      padding-inline: 1rem;
+      margin-inline: auto;
+      max-inline-size: 700px;
+    }
+  }
+</style>

@@ -1,0 +1,20 @@
+<section id="contact" class="center">
+  <h2>{{ hugo.Data.contact.title }}</h2>
+  <address>
+    <p>
+      {{ $phone := hugo.Data.contact.phone }}
+      {{ $phone.label }}:
+      <a href="tel:{{ $phone.number }}">
+        {{ $phone.displayNumber }}
+      </a>
+    </p>
+
+    <p>
+      {{ $email := hugo.Data.contact.mail }}
+      {{ $email.label }}:
+      <a href="mailto:{{ $email.address }}">
+        {{ $email.address }}
+      </a>
+    </p>
+  </address>
+</section>

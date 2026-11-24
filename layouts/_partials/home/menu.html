@@ -1,0 +1,59 @@
+<section id="menu">
+  <picture>
+    {{ with resources.Get hugo.Data.menu.image.url }}
+      {{ with .Fill "smart 480x400 webp q50" }}
+        <source media="(width <= 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x400 webp q50" }}
+        <source media="(width > 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x400 webp q50" }}
+        <img src="{{ .RelPermalink }}" alt="{{ hugo.Data.menu.image.alt }}" width="{{ .Width}}" height="{{ .Height }}" fetchpriority="high">
+      {{ end }}
+    {{ end }}
+  </picture>
+  <h2 class="center">Menu</h2>
+  {{ $menu := dict }}
+  {{ range $key, $value := hugo.Data.menu }}
+    {{ if ne $key "image" }}
+      {{ $menu = merge $menu (dict $key $value) }}
+    {{ end }}
+  {{ end }}
+  {{ range sort $menu "weight" }}
+    <section>
+      <h3 class="center">{{ .title }}</h3>
+      <ul class="content">
+        {{ range .items }}
+          <li>
+            <article class="menu-item">
+              <h4 class="name">{{ .name }}</h4>
+
+              {{ with .description }}
+                <p class="description">{{ . }}</p>
+              {{ end }}
+
+              {{ $currency := site.Params.currency }}
+              {{ $precision := site.Params.precision }}
+              <data class="price" value="{{ .price }}">
+                {{ .price | lang.FormatCurrency $precision $currency }}
+              </data>
+              {{ with .addons }}
+                <ul class="menu-options">
+                  {{ range . }}
+                    <li>
+                      <span>{{ .name }}</span>
+                      <data value="{{ .price }}">
+                        +{{ .price | lang.FormatCurrency $precision $currency }}
+                      </data>
+                    </li>
+                  {{ end }}
+                </ul>
+              {{ end }}
+            </article>
+          </li>
+        {{ end }}
+      </ul>
+    </section>
+    <hr>
+  {{ end }}
+</section>

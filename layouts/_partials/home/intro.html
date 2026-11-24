@@ -1,0 +1,17 @@
+<section id="intro">
+  <picture>
+    {{ with resources.Get hugo.Data.intro.image.url }}
+      {{ with .Fill "smart 480x600 webp q50" }}
+        <source media="(width <= 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x600 webp q50" }}
+        <source media="(width > 480px)" srcset="{{ .RelPermalink }}" width="{{ .Width}}" height="{{ .Height }}">
+      {{ end }}
+      {{ with .Fill "smart 800x600 webp q50" }}
+        <img src="{{ .RelPermalink }}" alt="{{ hugo.Data.intro.image.alt }}" width="{{ .Width}}" height="{{ .Height }}" fetchpriority="high">
+      {{ end }}
+    {{ end }}
+  </picture>
+  <h2 class="center">{{ hugo.Data.intro.title }}</h2>
+  <p class="pretty-paragraph content">{{ hugo.Data.intro.content }}</p>
+</section>
